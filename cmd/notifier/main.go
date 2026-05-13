@@ -26,9 +26,11 @@ func main() {
 	password := os.Getenv("EMAIL_PASSWORD")
 	receiver := os.Getenv("EMAIL_RECEIVER")
 	targetURL := "https://goodjob.khu.ac.kr/bbs/board.php?bo_table=s4_1&sca=%EA%B5%AD%EC%A0%9C&page=1"
+	tableName := os.Getenv("DYNAMO_TABLE_NAME")
 
 	c := crawler.NewKHUCrawler(targetURL)
-	repo := repository.NewFileRepository("last_post.txt")
+	//repo := repository.NewFileRepository("last_post.txt")
+	repo := repository.NewDynamoRepository(tableName)
 	noti := notifier.NewEmailNotifier(sender, password, receiver)
 
 	// 2. 프로그램 켜지자마자 1번 즉시 실행
@@ -60,7 +62,8 @@ func main() {
 }
 
 // runBot: 실제 크롤링 및 알림 발송을 담당하는 핵심 로직 (기존 main 함수 내용)
-func runBot(c *crawler.KHUCrawler, repo *repository.FileRepository, noti *notifier.EmailNotifier) {
+//func runBot(c *crawler.KHUCrawler, repo *repository.FileRepository, noti *notifier.EmailNotifier) {
+func runBot(c *crawler.KHUCrawler, repo *repository.DynamoRepository, noti *notifier.EmailNotifier) {
 	posts, err := c.GetRecentPosts()
 	if err != nil {
 		fmt.Println("크롤링 오류:", err)
