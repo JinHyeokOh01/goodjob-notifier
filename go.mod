@@ -9,6 +9,7 @@ require (
 
 require (
 	github.com/andybalholm/cascadia v1.3.3 // indirect
+	github.com/aws/aws-lambda-go v1.54.0 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.41.7 // indirect
 	github.com/aws/aws-sdk-go-v2/config v1.32.17 // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.19.16 // indirect
